@@ -13,11 +13,11 @@ KEYS_DIR="/Users/skyprawngo/Documents/keys"
 
 BUNDLE_ID="com.skyprawngo.uYouEnhanced"
 TEAM_ID="5SB7JJYS4S"
-CERT="Apple Development: skyprawngo@gmail.com (Z5BPV67Q38)"
+CERT="Apple Development: JeongYun Lee (Z5BPV67Q38)"
 
-PP_MAIN="$KEYS_DIR/uYouEnhanced_Dev.mobileprovision"
-PP_SHARE="$KEYS_DIR/uYouEnhanced_Share_Extension_Dev.mobileprovision"
-PP_OPENYOUTUBE="$KEYS_DIR/uYouEnhanced_OpenYoutube_Extension_Dev.mobileprovision"
+PP_MAIN="$KEYS_DIR/uYouEnhanced.mobileprovision"
+PP_SHARE="$KEYS_DIR/uYouEnhanced_Share.mobileprovision"
+PP_OPENYOUTUBE="$KEYS_DIR/uYouEnhanced_OpenYoutube.mobileprovision"
 
 # ── IPA 입력 결정 ──────────────────────────────────────────────
 if [[ -n "$1" ]]; then
