@@ -325,6 +325,36 @@ static void refreshUYouAppearance() {
 }
 %end
 
+// Stop inline feed playback when navigating to watch page
+static NSString *const kStopInlinePlaybackNotification = @"uYouEnhanced_StopInlinePlayback";
+
+%hook MLAVPlayer
+- (instancetype)initWithVideo:(id)video playerConfig:(id)playerConfig stickySettings:(id)stickySettings externalPlaybackActive:(BOOL)externalPlaybackActive {
+    self = %orig;
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uYouEnhanced_stopForWatchPage) name:kStopInlinePlaybackNotification object:nil];
+    }
+    return self;
+}
+%new
+- (void)uYouEnhanced_stopForWatchPage {
+    if (self.rate > 0) {
+        self.rate = 0;
+    }
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStopInlinePlaybackNotification object:nil];
+    %orig;
+}
+%end
+
+%hook YTWatchViewController
+- (void)viewDidLoad {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStopInlinePlaybackNotification object:nil];
+    %orig;
+}
+%end
+
 // Prevent uYou's playback from colliding with YouTube's
 %hook PlayerVC
 - (void)close {
