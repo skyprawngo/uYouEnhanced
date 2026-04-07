@@ -326,6 +326,7 @@ static void refreshUYouAppearance() {
 %end
 
 // Stop inline feed playback when navigating to watch page
+// Pauses both uYou's PlayerManager and YouTube's native MLAVPlayer
 static NSString *const kStopInlinePlaybackNotification = @"uYouEnhanced_StopInlinePlayback";
 
 %hook MLAVPlayer
@@ -340,6 +341,7 @@ static NSString *const kStopInlinePlaybackNotification = @"uYouEnhanced_StopInli
 - (void)uYouEnhanced_stopForWatchPage {
     if (self.rate > 0) {
         self.rate = 0;
+        self.active = NO;
     }
 }
 - (void)dealloc {
@@ -350,6 +352,10 @@ static NSString *const kStopInlinePlaybackNotification = @"uYouEnhanced_StopInli
 
 %hook YTWatchViewController
 - (void)viewDidLoad {
+    // Stop uYou's feed autoplay
+    [[%c(PlayerManager) sharedInstance] pause];
+    [[%c(PlayerManager) sharedInstance] setSource:nil];
+    // Stop YouTube's native inline feed playback
     [[NSNotificationCenter defaultCenter] postNotificationName:kStopInlinePlaybackNotification object:nil];
     %orig;
 }

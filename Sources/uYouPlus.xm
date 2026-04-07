@@ -1076,13 +1076,9 @@ static NSMutableArray <YTIItemSectionRenderer *> *filteredArray(NSArray <YTIItem
     return NO;
 }
 - (void)layoutSubviews {
-    // Check if already removed from superview
-    if (self.superview) {
-        [self removeFromSuperview];
-    }
-    self.hidden = YES;
-    self.frame = CGRectZero;
     %orig;
+    self.hidden = YES;
+    self.userInteractionEnabled = NO;
 }
 %end
 %end
