@@ -16,8 +16,12 @@
 
 %hook YTMainAppVideoPlayerOverlayView
 - (BOOL)isUserInteractionEnabled {
-    if([[self _viewControllerForAncestor].parentViewController.parentViewController isKindOfClass:%c(YTWatchMiniBarViewController)]) {
-        return NO;
+    UIViewController *vc = [self _viewControllerForAncestor];
+    while (vc) {
+        if ([vc isKindOfClass:%c(YTWatchMiniBarViewController)]) {
+            return [(YTWatchMiniBarViewController *)vc isActivated] ? NO : %orig;
+        }
+        vc = vc.parentViewController;
     }
     return %orig;
 }
