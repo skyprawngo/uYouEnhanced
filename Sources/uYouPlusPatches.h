@@ -9,11 +9,7 @@
 #import <YouTubeHeader/GPBUnknownField.h>
 #import <YouTubeHeader/GPBUnknownFields.h>
 #import "uYouPlus.h"
-
-// Stop inline feed playback when navigating to watch page
-@interface MLAVPlayer : NSObject
-@property (nonatomic, readwrite, assign) float rate;
-@end
+#import <YouTubeHeader/MLAVPlayer.h>
 
 @interface PlayerManager : NSObject
 // Prevent uYou player bar from showing when not playing downloaded media
